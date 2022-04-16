@@ -2,7 +2,7 @@ import axiosIns from '../libs/axios'
 
 class StudentService {
     async getAll () {
-        return axiosIns.post('/actors/employee/retrieve')
+        return axiosIns.post('/actors/student/retrieve')
           .then((response) => {
             console.log(response);
           })
