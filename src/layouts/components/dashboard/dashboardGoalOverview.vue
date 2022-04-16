@@ -49,7 +49,7 @@
         class="border-top d-flex align-items-between flex-column py-1"
       >
         <b-card-text class="text-muted mb-0">
-          In Progress
+          Rest
         </b-card-text>
         <h3 class="font-weight-bolder mb-0">
           {{ data.inProgress }}
@@ -65,6 +65,7 @@ import {
 } from 'bootstrap-vue'
 import VueApexCharts from 'vue-apexcharts'
 import { $themeColors } from '@themeConfig'
+import DashboardService from '../../../services/dashboard_service'
 
 const $strokeColor = '#ebe9f1'
 const $textHeadingColor = '#5e5873'
@@ -85,6 +86,15 @@ export default {
       type: Object,
       default: () => {},
     },
+  },
+  async mounted(){
+    var dash = await DashboardService.getPaidStatistics()
+    this.data = {
+      completed: dash.data.data.sum.toString(),
+      inProgress: (dash.data.data.sum - dash.data.data.paidValue).toString(),
+      series:[(dash.data.data.sum / (dash.data.data.paidValue))],
+      years: ["2021-2022","2022-2023","2023-2024","2024-2025","2025-2026","2026-2027","2027-2028"]
+    }
   },
   data() {
     return {

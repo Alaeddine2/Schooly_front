@@ -38,45 +38,64 @@
                   Expenses report
                 </h3>
               </b-card-title>
+              <div class="dropdown">
+                <b-dropdown
+                  variant="link"
+                  no-caret
+                  toggle-class="p-0"
+                  right
+                >
+              <template #button-content>
+                    <feather-icon
+                      icon="MoreVerticalIcon"
+                      size="17"
+                      class="align-middle text-body"
+                    />
+                  </template>
+                  <b-dropdown-item>
+                    Import details
+                  </b-dropdown-item>
+                </b-dropdown>
+              </div>
             </b-card-header>
 
             <b-card-body>
               <div style="margin-top: 8%">
-                Total expenses per year: <span style="color: white; margin-left: 1%">50000</span>
+                Total expenses per year: <strong style="margin-left: 1%">50000</strong>
               </div>
               <div style="margin-top: 1%">
-                Total expenses per month: <span style="color: white; margin-left: 1%">6000</span>
+                Total expenses per month: <strong style="margin-left: 1%">6000</strong>
               </div>
               <div style="margin-top: 3%">
                 Expenses per teachers:
               </div>
               <div style="margin-top: 1%" class="d-sm-flex justify-content-between">
-                <div class="d-sm-flex align-content-center">
-                  Total teachers per year: <span style="color: white; margin-left: 1%; align-text: center" class="d-sm-flex align-self-center">30000</span>
+                <div class="d-sm-flex align-content-center" style="width:35%">
+                  Total teachers per year: <strong style="margin-left: 1%; align-text: center" class="d-sm-flex align-self-center">30000</strong>
                 </div>
-                <div class="d-sm-flex align-content-center">
-                  Total teachers per month: <span style="color: white; margin-left: 1%; align-text: center" class="d-sm-flex align-self-center">2300</span>
+                <div class="d-sm-flex align-content-center" style="width:35%">
+                  Total teachers per month: <strong style="margin-left: 1%; align-text: center" class="d-sm-flex align-self-center">2300</strong>
                 </div>
               </div>
               <div style="margin-top: 3%">
                 Expenses per employees:
               </div>
               <div style="margin-top: 1%" class="d-sm-flex justify-content-between">
-                <div class="d-sm-flex align-content-center">
-                  Total employees per year: <span style="color: white; margin-left: 1%; align-text: center" class="d-sm-flex align-self-center">20000</span>
+                <div class="d-sm-flex align-content-center" style="width:35%">
+                  Total employees per year: <strong style="margin-left: 1%; align-text: center" class="d-sm-flex align-self-center">20000</strong>
                 </div>
-                <div class="d-sm-flex align-content-center">
-                  Total employees per month: <span style="color: white; margin-left: 1%; align-text: center" class="d-sm-flex align-self-center">1900</span>
+                <div class="d-sm-flex align-content-center" style="width:35%">
+                  Total employees per month: <strong style="margin-left: 1%; align-text: center" class="d-sm-flex align-self-center">1900</strong>
                 </div>
               </div>
               <div style="margin-top: 3%">
                 Highest paid workers:
               </div>
               <div style="margin-top: 1%">
-                Highest paid teacher: <span style="color: white; margin-left: 1%" class="workers">Bouhajja Alaeddine</span>
+                Highest paid teacher: <strong style="margin-left: 1%" class="workers">Bouhajja Alaeddine</strong>
               </div>
               <div style="margin-top: 1%; margin-bottom: 4%;">
-                Total paid employee: <span style="color: white; margin-left: 1%" class="workers">Majed saja3</span>
+                Total paid employee: <strong style="margin-left: 1%" class="workers">Majed saja3</strong>
               </div>
             </b-card-body>
           </b-card>
@@ -100,6 +119,7 @@ import EcommerceRevenueReport from '../layouts/components/dashboard/dahsboardRev
 import dashboardGoalOverview from '../layouts/components/dashboard/dashboardGoalOverview.vue'
 import dashboardCongratulation from '../layouts/components/dashboard/dashnoardCongratulation.vue'
 import ApexRadialBarChart from '../layouts/components/dashboard/ApexRadialBarChart.vue'
+import DashboardService from '../services/dashboard_service'
 
 export default {
   components: {
@@ -116,34 +136,45 @@ export default {
     dashboardCongratulation,
     ApexRadialBarChart
   },
-  mounted(){},
+  async mounted(){
+    let statistics = await DashboardService.getStatistics();
+    if(statistics.status == 200){
+      this.data.statisticsItems[0].title = statistics.data.data.students.toString();
+      this.data.statisticsItems[1].title = statistics.data.data.teachers.toString();
+      this.data.statisticsItems[2].title = statistics.data.data.employees.toString();
+      this.data.statisticsItems[3].title = statistics.data.data.classes.toString();
+      this.data.statisticsItems[3].title = statistics.data.data.levels.toString();
+      console.log(statistics);
+    }
+    
+  },
   data() {
     return {
       selectedYear: "2021-2022",
       years: ["2021-2022","2022-2023","2023-2024","2024-2025","2025-2026","2026-2027","2027-2028"],
       data: {
         statisticsItems: [{
-          title: '265',
+          title: '0',
           subtitle: 'of Students',
           icon: 'UsersIcon',
           color: "light-primary",
           customClass: "mb-2 mb-xl-0"
         },
         {
-          title: '25',
+          title: '0',
           subtitle: 'of teachers',
           icon: 'BookIcon',
           color: "light-success",
           customClass: "mb-2 mb-xl-0"
         },
         {
-          title: '10',
+          title: '0',
           subtitle: 'of employees',
           icon: 'UserIcon',
           color: "light-info",
           customClass: "mb-2 mb-xl-0"
         },{
-          title: '15',
+          title: '0',
           subtitle: 'of classes',
           icon: 'HomeIcon',
           color: "light-danger",
@@ -229,6 +260,5 @@ export default {
   .workers:hover{
     cursor: pointer;
     color: #7367f0;
-    background-color: #7367f0;
   }
 </style>
