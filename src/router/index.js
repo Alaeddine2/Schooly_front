@@ -39,6 +39,48 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/teachers',
+      name: 'teachers',
+      component: () => import('@/views/Teacher/Teacher.vue'),
+      meta: {
+        pageTitle: 'Teacher Page',
+        breadcrumb: [
+          {
+            text: 'Teacher Page',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/teachers/add',
+      name: 'teachers-add',
+      component: () => import('@/views/Teacher/add.vue'),
+      meta: {
+        pageTitle: 'Teacher Page',
+        breadcrumb: [
+          {
+            text: 'Teacher Page',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/employees',
+      name: 'employees',
+      component: () => import('@/views/Employees/employees.vue'),
+      meta: {
+        pageTitle: 'employees Page',
+        breadcrumb: [
+          {
+            text: 'employees Page',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
       path: '/',
       name: 'login',
       component: () => import('@/views/Login.vue'),

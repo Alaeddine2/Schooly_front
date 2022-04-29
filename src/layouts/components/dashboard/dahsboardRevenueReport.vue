@@ -87,6 +87,8 @@ import {
 import VueApexCharts from 'vue-apexcharts'
 import { $themeColors } from '@themeConfig'
 import Ripple from 'vue-ripple-directive'
+import DashboardService from '../../../services/dashboard_service'
+import utils from '../../../util/dashboard'
 
 export default {
   components: {
@@ -186,13 +188,44 @@ export default {
       },
     }
   },
-  mounted() {
-    
+  async mounted() {
+    var dash = await DashboardService.getPaidStatistics("2021-2022")
+    dash = await utils.featchRevenuePerMonth(dash.data.data)
+    this.changingData(dash);
   },
   methods:{
-    selectYear(val){
-      console.log(val);
+    async selectYear(val){
       this.selectedYear = val;
+      var dash = await DashboardService.getPaidStatistics(val)
+      dash = await utils.featchRevenuePerMonth(dash.data.data)
+      this.changingData(dash);
+    },
+    changingData(object){
+      this.data = 
+        {
+          expected: object.sum,
+          budgetChart: {
+            series: [{
+              data: [61,48,69,52,60,40,70,60,59,43,62]
+            },{
+              data: [20,10,30,15,23,0,25,15,20,5,27]
+            }]
+          },
+          totalEarning: object.paidValue,
+          revenueReport: {
+            series: [
+              {
+                data: object.series,
+                name: "Earning"
+              },
+              {
+                data: object.maxValue,
+                name:"Expected gain"
+              }
+            ]
+          },
+          years: ["2021-2022","2022-2023","2023-2024","2024-2025","2025-2026","2026-2027","2027-2028"]
+        }
     }
   }
 }

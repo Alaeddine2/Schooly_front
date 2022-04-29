@@ -10,8 +10,8 @@ class DashboardService {
             console.log(e);
           })
     }
-    async getPaidStatistics () {
-        return axiosIns.post('/dashboard/payment/statistics',{"year": "2021-2022"})
+    async getPaidStatistics (year) {
+        return axiosIns.post('/dashboard/payment/statistics',{"year": year})
           .then((response) => {
             return response;
           })

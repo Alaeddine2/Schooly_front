@@ -94,7 +94,7 @@
               <div style="margin-top: 1%">
                 Highest paid teacher: <strong style="margin-left: 1%" class="workers">Bouhajja Alaeddine</strong>
               </div>
-              <div style="margin-top: 1%; margin-bottom: 4%;">
+              <div style="margin-top: 1%; margin-bottom: 7%;">
                 Total paid employee: <strong style="margin-left: 1%" class="workers">Majed saja3</strong>
               </div>
             </b-card-body>

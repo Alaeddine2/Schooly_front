@@ -88,7 +88,7 @@ export default {
     },
   },
   async mounted(){
-    var dash = await DashboardService.getPaidStatistics()
+    var dash = await DashboardService.getPaidStatistics("2021-2022")
     this.data = {
       completed: dash.data.data.sum.toString(),
       inProgress: (dash.data.data.sum - dash.data.data.paidValue).toString(),
@@ -164,9 +164,16 @@ export default {
     }
   },
   methods:{
-    selectYear(val){
+    async selectYear(val){
       console.log(val);
       this.selectedYear = val;
+      var dash = await DashboardService.getPaidStatistics(val)
+      this.data = {
+        completed: dash.data.data.sum.toString(),
+        inProgress: (dash.data.data.sum - dash.data.data.paidValue).toString(),
+        series:[(dash.data.data.sum / (dash.data.data.paidValue))],
+        years: ["2021-2022","2022-2023","2023-2024","2024-2025","2025-2026","2026-2027","2027-2028"]
+      }
     }
   }
 }

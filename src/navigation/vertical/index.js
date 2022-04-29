@@ -9,4 +9,14 @@ export default [
     route: 'second-page',
     icon: 'FileIcon',
   },
+  {
+    title: 'Teachers',
+    route: 'teachers',
+    icon: 'BookOpenIcon',
+  },
+  {
+    title: 'Employees',
+    route: 'employees',
+    icon: 'UsersIcon',
+  },
 ]
